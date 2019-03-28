@@ -1,16 +1,18 @@
 export default class Timer {
   constructor(focusTime, restTime, alarm) {
-    this.focusTime = focusTime;
+    this.focusTime = focusTime * 60 * 1000;
     this.focus = true;
-    this.restTime = restTime;
-    this.currentTimer = focusTime;
+    this.restTime = restTime * 60 * 1000;
+    this.currentTimer = this.focusTime;
     this.intervalTimer = null;
     this.alarm = alarm;
   }
 
-  start() {
+  start(ui) {
+    ui.setCounter(this.currentTimer);
     this.intervalTimer = setInterval(() => {
       this.currentTimer -= 1000;
+      ui.setCounter(this.currentTimer);
 
       if (this.currentTimer === 0) {
         if (this.focus) {
@@ -32,5 +34,11 @@ export default class Timer {
   stop() {
     clearInterval(this.intervalTimer);
     this.currentTime = this.focusTime;
+  }
+
+  changeTime(focusTime, restTime) {
+    this.focusTime = focusTime * 60 * 1000;
+    this.restTime = restTime * 60 * 1000;
+    this.currentTimer = this.focusTime;
   }
 }

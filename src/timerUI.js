@@ -1,8 +1,9 @@
 import * as screens from './screens.js';
 
 export default class Screen {
-  constructor(screen) {
+  constructor(screen, timer) {
     this.activeScreen = screen;
+    this.timer = timer;
   }
 
   render() {
@@ -19,6 +20,7 @@ export default class Screen {
       if (handler.changeScreen) {
         const nextScreen = screens[handler.nextScreen];
         handlerFn = () => {
+          handler.fn(this.timer);
           this.changeScreen(nextScreen);
         };
       }
