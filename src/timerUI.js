@@ -1,3 +1,5 @@
+import * as screens from './screens.js';
+
 export default class Screen {
   constructor(screen) {
     this.activeScreen = screen;
@@ -12,7 +14,16 @@ export default class Screen {
   setHandlers() {
     this.activeScreen.handlers.forEach((handler) => {
       const element = document.getElementById(handler.id);
-      element.addEventListener(handler.event, handler.fn);
+      let handlerFn = handler.fn;
+
+      if (handler.changeScreen) {
+        const nextScreen = screens[handler.nextScreen];
+        handlerFn = () => {
+          this.changeScreen(nextScreen);
+        };
+      }
+
+      element.addEventListener(handler.event, handlerFn);
     });
   }
 
