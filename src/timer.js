@@ -28,11 +28,11 @@ export default class Timer {
   }
 
   pause() {
-    clearInterval(this.intervalTimer);
+    this.intervalTimer = clearInterval(this.intervalTimer);
   }
 
   stop() {
-    clearInterval(this.intervalTimer);
+    this.intervalTimer = clearInterval(this.intervalTimer);
     this.currentTime = this.focusTime;
   }
 

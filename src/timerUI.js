@@ -15,17 +15,14 @@ export default class Screen {
   setHandlers() {
     this.activeScreen.handlers.forEach((handler) => {
       const element = document.getElementById(handler.id);
-      let handlerFn = handler.fn;
 
-      if (handler.changeScreen) {
-        const nextScreen = screens[handler.nextScreen];
-        handlerFn = () => {
-          handler.fn(this.timer);
+      element.addEventListener(handler.event, (e) => {
+        handler.fn(e, this.timer);
+        if (handler.changeScreen) {
+          const nextScreen = screens[handler.nextScreen];
           this.changeScreen(nextScreen);
-        };
-      }
-
-      element.addEventListener(handler.event, handlerFn);
+        }
+      });
     });
   }
 

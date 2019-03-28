@@ -4,7 +4,7 @@ function avoidTypingNaN(e) {
   }
 }
 
-function startTimer(timer) {
+function startTimer(e, timer) {
   const focusTime = document.getElementById('focus-time').value;
   const restTime = document.getElementById('rest-time').value;
   timer.changeTime(focusTime, restTime);
@@ -66,8 +66,16 @@ function formatMs(ms) {
   return `${addTrailingZeros(minutes, 2)}:${addTrailingZeros(seconds, 2)}`;
 }
 
-function stopTimer(timer) {
+function stopTimer(e, timer) {
   timer.stop();
+}
+
+function pauseTimer(e, timer) {
+  if (timer.intervalTimer) {
+    timer.pause();
+  } else {
+    timer.start(timerScreen);
+  }
 }
 
 export const timerScreen = {
@@ -88,8 +96,13 @@ export const timerScreen = {
       id: 'stop',
       event: 'click',
       changeScreen: true,
-      nextScreen: 'timerConfiguration',
+      nextScreen: 'timerConfigurationScreen',
       fn: stopTimer,
+    },
+    {
+      id: 'start',
+      event: 'click',
+      fn: pauseTimer,
     },
   ],
   setCounter(currentTimer) {
