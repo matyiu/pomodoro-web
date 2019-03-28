@@ -50,12 +50,20 @@ export const timerConfigurationScreen = {
   ],
 };
 
+function addTrailingZeros(str, newLength) {
+  const strLength = str.length;
+  const repeatCharsCounter = newLength - strLength;
+  const trailingZeros = '0'.repeat(repeatCharsCounter);
+
+  return trailingZeros + str;
+}
+
 function formatMs(ms) {
   const toSeconds = ms / 1000;
-  const minutes = Math.floor(toSeconds / 60);
-  const seconds = toSeconds - (minutes * 60);
+  const minutes = String(Math.floor(toSeconds / 60));
+  const seconds = String(toSeconds - (minutes * 60));
 
-  return `${minutes}:${seconds}`;
+  return `${addTrailingZeros(minutes, 2)}:${addTrailingZeros(seconds, 2)}`;
 }
 
 function stopTimer(timer) {
