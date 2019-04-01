@@ -11,11 +11,25 @@ function startTimer(e, timer) {
   timer.start(timerScreen);
 }
 
+function addHourLimitInput(e) {
+  const timerConfigurationUI = document.getElementById('timer-configuration');
+  const hourLimitInput = document.getElementById('limit');
+  const modeButton = document.getElementById('mode');
+  if (hourLimitInput) {
+    const hourLimitRow = hourLimitInput.parentElement;
+    hourLimitRow.remove();
+    modeButton.textContent = 'Automatic Cycle';
+  } else {
+    timerConfigurationUI.innerHTML += timerConfigurationScreen.hourLimitTemplate;
+    modeButton.textContent = 'Normal Mode';
+  }
+}
+
 export const timerConfigurationScreen = {
   template: `
   <div class="wrapper">
     <section id="timer-configuration">
-      <div class="cycle">
+      <div class="row">
         <div id="focus">
           <p>Focus: <input type="text" pattern="\\d+" id="focus-time" value=50></p>
         </div>
@@ -26,8 +40,17 @@ export const timerConfigurationScreen = {
     </section>
     <div class="buttons">
       <button type="button" id="start" class="primary-button">Start</button>
+      <button type="button" id="mode" class="secondary-button">Automatic Cycle</button>
     </div>
   </div>
+  `,
+  hourLimitTemplate: `
+    <div class="row">
+      <div id="limit">
+        <p>Time Limit: <input type="text" id="hour-limit" col=5></p>
+      </div>
+      <div class="border"></div>
+    </div>
   `,
   handlers: [
     {
@@ -46,6 +69,11 @@ export const timerConfigurationScreen = {
       changeScreen: true,
       nextScreen: 'timerScreen',
       fn: startTimer,
+    },
+    {
+      id: 'mode',
+      event: 'click',
+      fn: addHourLimitInput
     },
   ],
 };
