@@ -4,9 +4,24 @@ function avoidTypingNaN(e) {
   }
 }
 
+function hourToMs(hourLimit) {
+  const timePattern = /(\d{1,2}):(\d{2})/;
+  const [_, hour, minutes] = hourLimit.match(timePattern);
+  const ms = new Date();
+
+  ms.setHours(Number(hour), Number(minutes), 0);
+
+  return ms.getTime();
+}
+
 function startTimer(e, timer) {
   const focusTime = document.getElementById('focus-time').value;
   const restTime = document.getElementById('rest-time').value;
+  const hourLimit = document.getElementById('hour-limit');
+
+  if (hourLimit) {
+    timer.setHourLimit(hourToMs(hourLimit.value), true);
+  }
   timer.changeTime(focusTime, restTime);
   timer.start(timerScreen);
 }
