@@ -1,14 +1,3 @@
-// Alarma debe de contar con un método notify
-// Habrá dos tipos de notificaciones:
-//   sonido
-//   notificación
-// En las notificaciones de solo sonido
-// Cogeremos el archivo del sonido
-// Crearemos un audio
-// Diremos al navegador que cargue un archivo de audio
-// Cuando haya cargado
-// Reproducir el sonido hasta que hayan pasado 2 segundos como máximo
-
 function loadAudio(path) {
   return new Promise((resolve, reject) => {
     const audio = new Audio(path);
